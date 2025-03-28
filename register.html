@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta - CodeDev</title>
+    <link rel="stylesheet" href="./src/css/register.css">
+</head>
+<body>
+    <div class="main-content">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1 class="auth-title">Crie sua conta</h1>
+                <p class="auth-subtitle">Junte-se a nossa comunidade de aprendizado</p>
+            </div>
+
+            <div class="auth-card">
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" class="form-input" placeholder="seu@email.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password" class="form-label">Senha</label>
+                        <input type="password" id="password" class="form-input" placeholder="••••••••" required minlength="6">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword" class="form-label">Confirme sua senha</label>
+                        <input type="password" id="confirmPassword" class="form-input" placeholder="••••••••" required>
+                    </div>
+                    
+                    <button type="submit" class="auth-btn">Criar conta</button>
+                    
+                    <div class="auth-footer">
+                        Já tem uma conta? <a href="login.html" class="auth-link">Faça login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toggle de Tema -->
+    <div class="theme-toggle-container">
+        <span class="theme-toggle-label" id="themeLabel">Tema</span>
+        <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+            <span class="theme-icon sun-icon">☀️</span>
+            <span class="theme-icon moon-icon">🌙</span>
+        </button>
+    </div>
+
+    <script>
+        // Função do Toggle de Tema
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeLabel = document.getElementById('themeLabel');
+            const body = document.body;
+            
+            // Verificar preferência salva ou do sistema
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const savedTheme = localStorage.getItem('darkMode');
+            
+            if (savedTheme === 'true' || (!savedTheme && prefersDark)) {
+                body.classList.add('dark-mode');
+                updateThemeUI(true);
+            }
+            
+            // Configurar o toggle
+            themeToggle.addEventListener('click', function() {
+                const isDark = !body.classList.contains('dark-mode');
+                body.classList.toggle('dark-mode', isDark);
+                localStorage.setItem('darkMode', isDark);
+                updateThemeUI(isDark);
+            });
+            
+            function updateThemeUI(isDark) {
+                themeLabel.textContent = isDark ? 'Modo Escuro' : 'Modo Claro';
+                document.querySelector('.sun-icon').style.opacity = isDark ? '1' : '0';
+                document.querySelector('.moon-icon').style.opacity = isDark ? '0' : '1';
+            }
+            
+            // Validação do formulário
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                if (password !== confirmPassword) {
+                    alert('As senhas não coincidem!');
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    alert('A senha deve ter pelo menos 6 caracteres!');
+                    return;
+                }
+                
+                // Simular registro bem-sucedido
+                alert('Conta criada com sucesso! Redirecionando...');
+                // window.location.href = 'dashboard.html';
+            });
+        });
+    </script>
+</body>
+</html>
